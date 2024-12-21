@@ -17,19 +17,24 @@ public class ClientePrueba {
     }
 
     public void realizarPruebas(Contacto nuevoContacto) {
-// Agrega un nuevo contacto
+        // Agrega un nuevo contacto
         nuevoContacto = agregarContacto(nuevoContacto);
         System.out.println("Contacto agregado: " + nuevoContacto);
-// Obtiene todos los contactos
+
+        // Modifica el contacto
+        nuevoContacto.setTelefono("111222333");
+        modificarContacto(nuevoContacto.getId(), nuevoContacto);
+
+        // Obtiene todos los contactos
         listarContactos();
-// Obtiene un contacto por ID
+
+        // Obtiene un contacto por ID
         obtenerContactoPorId(nuevoContacto.getId());
-// Elimina un contacto por ID
+
+        // Elimina un contacto por ID
         eliminarContacto(nuevoContacto.getId());
 
-        modificarContacto(1L, nuevoContacto);
-
-// Obtiene todos los contactos después de la eliminación
+        // Obtiene todos los contactos después de la eliminación
         listarContactos();
     }
     private Contacto agregarContacto(Contacto contacto) {
@@ -60,16 +65,15 @@ public class ClientePrueba {
         System.out.println("Contacto eliminado con ID: " + id);
     }
 
-    private Contacto modificarContacto(Long id, Contacto contacto)
-    {
+    private Contacto modificarContacto(Long id, Contacto contacto) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Contacto> requestEntity = new
-                HttpEntity<>(contacto, headers);
-        ResponseEntity<Contacto> response =
-                restTemplate.exchange(BASE_URL + "/" + id, HttpMethod.PUT,
-                        requestEntity, Contacto.class);
+        HttpEntity<Contacto> requestEntity = new HttpEntity<>(contacto, headers);
+
+        ResponseEntity<Contacto> response = restTemplate.exchange(
+                BASE_URL + "/" + id, HttpMethod.PUT, requestEntity, Contacto.class);
+
         return response.getBody();
     }
 }

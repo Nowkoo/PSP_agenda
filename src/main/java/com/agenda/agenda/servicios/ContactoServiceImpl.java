@@ -31,13 +31,4 @@ public class ContactoServiceImpl implements ContactoService {
     public void eliminar(Long id) {
         contactoRepository.eliminar(id);
     }
-
-    @Override
-    public Contacto actualizar(Long id, Contacto contacto) {
-        Contacto existingContacto = contactoRepository.obtenerPorId(id);
-        existingContacto.setNombre(contacto.getNombre());
-        existingContacto.setTelefono(contacto.getTelefono());
-        // Update other fields as necessary
-        return contactoRepository.guardar(existingContacto);
-    }
 }
